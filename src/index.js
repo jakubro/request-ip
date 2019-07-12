@@ -49,7 +49,11 @@ function getClientIp(req) {
 
     // Server is probably behind a proxy.
     if (req.headers) {
-        
+
+        if (is.ip(this.native.headers['x-browser-ip'])) {
+            return this.native.headers['x-browser-ip'];
+        }
+
         // Standard headers used by Amazon EC2, Heroku, and others.
         if (is.ip(req.headers['x-client-ip'])) {
             return req.headers['x-client-ip'];
