@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var is = require('is_js');
 /**
@@ -55,7 +55,11 @@ function getClientIpFromXForwardedFor(value) {
 function getClientIp(req) {
   // Server is probably behind a proxy.
   if (req.headers) {
-    // Standard headers used by Amazon EC2, Heroku, and others.
+    if (is.ip(req.headers['x-browser-ip'])) {
+      return req.headers['x-browser-ip'];
+    } // Standard headers used by Amazon EC2, Heroku, and others.
+
+
     if (is.ip(req.headers['x-client-ip'])) {
       return req.headers['x-client-ip'];
     } // Load-balancers (AWS ELB) or proxies.
